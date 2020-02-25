@@ -7,11 +7,7 @@ class Node {
 
   // functions to be implemented 
   // removeFrom(location) 
-  // removeElement(element) 
-
-  // Helper Methods 
-  // isEmpty
-  // PrintList 
+  // removeElement(element)
 
 
 class LinkedList {
@@ -61,15 +57,15 @@ class LinkedList {
 
   removeFrom(index) {
     let current = this.head;
-    let previous;
     let i = 0;
 
     while(current) {
-      if(i === index) {
-
-        current = new Node(data, previous.next);
-        previous.next = current;
-        
+      if(i === index - 1) {``
+        if (current.next.next) {
+          current.next = current.next.next;
+        } else {
+          current.next = null;
+        }
         this.size--;
         break;
       } else {
@@ -104,5 +100,6 @@ ll.prependNode('1')
 ll.prependNode('0')
 ll.appendNode('2')
 ll.appendNode('3')
-ll.insertNodeAt('1.5', 1);
+// ll.insertNodeAt('1.5', 1);
+ll.removeFrom(2)
 ll.print()
