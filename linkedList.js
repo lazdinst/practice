@@ -5,11 +5,6 @@ class Node {
   }
 }
 
-  // functions to be implemented 
-  // removeFrom(location) 
-  // removeElement(element)
-
-
 class LinkedList {
   constructor(size, head) {
     this.size = 0;
@@ -42,7 +37,7 @@ class LinkedList {
     let i = 0;
 
     while(current) {
-      if(i === index) {
+      if(i === index - 1) {
         previous = current;
         current = new Node(data, previous.next);
         previous.next = current;
@@ -56,18 +51,53 @@ class LinkedList {
   }
 
   removeFrom(index) {
+    // If the Index is out of bounds
+    if (index > 0 && index > this.size) {
+      console.log(`Index Out of bounds: ${index}`);
+      return -1;
+    } else {
+      let current = this.head;
+      let i = 0;
+
+      // If the first Index is the Index of Interest; remove it
+      if(index === 0) {
+        this.head = current.next;
+        this.size--;
+      } else {
+
+        //TODO: The while look could be more efficient
+        // by combining the while conditiom with the index if condition
+
+        // Iterate until the Index of Interest is found
+        while(current) {
+          
+          // If the Index of Interest if the next Index; remove it
+          if(i === index - 1) {
+
+            // If Current does not have a next.next; last element
+            if (!current.next.next) {
+              current.next = null;
+            } else {
+              current.next = current.next.next;
+            }
+
+            this.size--;
+            break;
+          }
+          current = current.next;
+          i++;
+        }
+      }
+    }
+  }
+
+  removeElement(data) {
     let current = this.head;
     let i = 0;
 
     while(current) {
-      if(i === index - 1) {``
-        if (current.next.next) {
-          current.next = current.next.next;
-        } else {
-          current.next = null;
-        }
-        this.size--;
-        break;
+      if(current.next && current.next.data === data) {
+        current.next = current.next.next;
       } else {
         current = current.next;
         i++;
@@ -96,10 +126,17 @@ class LinkedList {
 }
 
 const ll = new LinkedList()
-ll.prependNode('1')
+console.log('Adding Node')
 ll.prependNode('0')
+console.log('Adding Node')
+ll.appendNode('1')
+console.log('Adding Node')
 ll.appendNode('2')
+console.log('Adding Node')
 ll.appendNode('3')
-// ll.insertNodeAt('1.5', 1);
-ll.removeFrom(2)
+console.log('Adding Node')
+ll.print()
+ll.removeFrom(1)
+ll.print()
+ll.insertNodeAt('1', 1);
 ll.print()
