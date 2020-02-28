@@ -104,6 +104,29 @@ class LinkedList {
       }
     }
   }
+
+
+
+  reverse() {
+    let current = this.head;
+    let previous = null;
+    let next = null;
+
+    while(current) {
+      // Set next to the current next node
+      next = current.next;
+
+      // Set current's next to the previous; reverse
+      current.next = previous;
+
+      // Set the previous to current
+      previous = current;
+
+      current = next;
+    }
+
+    this.head = previous;
+  }
   
   getSize() {
     console.log(`Size: ${this.size}`)
@@ -139,4 +162,6 @@ ll.print()
 ll.removeFrom(1)
 ll.print()
 ll.insertNodeAt('1', 1);
+ll.print()
+ll.reverse()
 ll.print()
