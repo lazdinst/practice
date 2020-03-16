@@ -118,6 +118,7 @@ class LinkedList {
 
   // Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
 
+  let current = 
 
   }
 
