@@ -106,20 +106,67 @@ class LinkedList {
   }
 
   reorder() {
-  // Given a singly linked list L: L0→L1→…→Ln-1→Ln, reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+    // Given a singly linked list L: L0→L1→…→Ln-1→Ln, reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
 
-  // You may not modify the values in the list's nodes, only nodes itself may be changed.
+    // You may not modify the values in the list's nodes, only nodes itself may be changed.
 
-  // Example 1:
+    // Example 1:
 
-  // Given 1->2->3->4, reorder it to 1->4->2->3.
-  
-  // Example 2:
+    // Given 1->2->3->4, reorder it to 1->4->2->3.
+    
+    // Example 2:
 
-  // Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
+    // Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
 
-  let current = 
+    let current = this.head;
+    let previous = null;
+    let firstNode = null;
+    let secondNode = null;
+    let nthNode = null;
+    let currentIndex = 0;
 
+    if(this.size <= 1) {
+      return 'Nothing to reorder';
+    }
+
+    if(this.size === 2) {
+      firstNode = current;
+      
+      secondNode = current.next;
+      secondNode.next = firstNode;
+
+      firstNode.next = null;
+      this.head = secondNode;
+      return this.head;
+    }
+
+    while(current) {
+      
+      if(!firstNode && !secondNode) {
+        firstNode = current;
+        secondNode = current.next;
+      }
+
+      if(currentIndex === (this.size - 1)) {
+        // Reached the Tail
+        nthNode = current;
+
+        // Set new tail
+        previous.next = null;
+
+        // Set reordered nodes next
+        nthNode.next = secondNode;
+
+        // Set the first node to the nth
+        firstNode.next = nthNode;
+        this.head = firstNode;
+        break;
+      }
+      currentIndex++;
+      previous = current;
+      current = current.next;
+    }
+    return this.head;
   }
 
   reverse() {
@@ -164,19 +211,17 @@ class LinkedList {
 }
 
 const ll = new LinkedList()
-console.log('Adding Node')
 ll.prependNode('0')
-console.log('Adding Node')
 ll.appendNode('1')
-console.log('Adding Node')
 ll.appendNode('2')
-console.log('Adding Node')
 ll.appendNode('3')
-console.log('Adding Node')
+ll.appendNode('4')
 ll.print()
 ll.removeFrom(1)
 ll.print()
 ll.insertNodeAt('1', 1);
 ll.print()
 ll.reverse()
+ll.print()
+ll.reorder()
 ll.print()
