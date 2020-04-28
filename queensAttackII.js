@@ -1,82 +1,58 @@
 const queensAttackII = (n, k, r_q, c_q, obstacles) => {
-  let board = generateBoard(n, k, r_q, c_q, obstacles);
-  return board;
-}
-
-const generateBoard = (n, k, r_q, c_q, obstacles) => {
-  let count = 0;
-  let matrix = n => Array.from({length: n}, () => new Array(n).fill(0));
-  
-  let board = matrix(n);
-
-  // Add Queen Position
-  board[r_q - 1][c_q - 1] = 9;
+  let count = 0, r_max = n - 1, c_max = n - 1;
+  let hash = new Set()
 
   // Add Obstacles
-  obstacles.forEach(obs => {board[obs[0]][obs[1]] = 'X'});
+  obstacles.forEach(obs => {
+    hash.add(`${obs[0] - 1},${obs[1] - 1}`)
+  });
 
-  // Determine possible moves
-  for(let r = r_q - 1; r >= 0; r--) {
-    let rowObstacle = false;
-    for(let c = c_q - 1; c >= 0; c--) {
-      let columnObstacle = false;
-      current = board[r][c];
-      if(r === (r_q - 1) && c === (c_q - 1)) {
+  // Left, Right, Up, Down
+  const directions = [
+    // left
+    {r: 0, c: -1}, 
+    //right
+    {r: 0, c: 1}, 
+    // up
+    {r: -1, c: 0}, 
+    //down
+    {r: 1, c: 0},
+    // up left
+    {r: -1, c: -1},
+    // up right
+    {r: -1, c: 1},
+    // down left
+    {r: 1, c: -1},
+    //down right
+    {r: 1, c: 1},
+  ];
+
+  // UP
+  for(let i = 0; i < directions.length; i++) {
+    let step = directions[i];
+    for(let r = r_q - 1, c = c_q - 1; r >=0 && r <= r_max && c >= 0 && c <= c_max; r+= step.r, c += step.c) {
+
+      // If is queen skip
+      if((r === r_q - 1) && (c === c_q - 1)) {
         continue;
       }
-      
-      // Same Row
-      if(r === r_q - 1) {
-        // Im in the same row
-        if(board[r][c] !== 'X' && !rowObstacle) {
-          board[r][c] = 1;
-          count++;
-          continue;
-        } else {
-          rowObstacle = true;
-          continue;
-        }
+
+      if(!hash.has(`${r},${c}`)) {
+        //Is not an obstcle
+        count++;
+      } else {
+        break;
       }
-
-      // Same Column
-      if(c === c_q - 1) {
-        if(board[r][c] !== 'X' && !columnObstacle) {
-          board[r][c] = 1;
-          count++;
-          continue;
-        } else {
-          columnObstacle = true;
-          continue;
-        }
-      }
-
-      let rowDiff = 0;
-      if(r < r_q || c < c_q) {
-        rowDiff = Math.abs(r_q - r);
-        colDiff = Math.abs(c_q - c);
-        if(rowDiff === colDiff) {
-          board[r][c] = 1;
-        }
-      }
-
-      // if(r > r_q || c > c_q) {
-      //   rowDiff = Math.abs(r - r_q);
-      //   colDiff = Math.abs(c - c_q);
-      //   if(rowDiff === colDiff) {
-      //     board[r][c] = 1;
-      //   }
-      // }
-
-
-
-
     }
   }
-  return board;
+  
+  return count;
 }
 
 // let n1 = 4, k1 = 0, r_q1 = 4, c_q1 = 4, obstacles1 = [];
 // let result1 = queensAttackII(n1, k1, r_q1, c_q1, obstacles1);
 // console.log(result1)
 
-
+let n2 = 5, k2 = 3, r_q2 = 4, c_q2 = 3, obstacles2 = [[5,5],[4,2],[2,3]];
+let result2 = queensAttackII(n2, k2, r_q2, c_q2, obstacles2);
+console.log(result2)
