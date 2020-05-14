@@ -1,3 +1,5 @@
+// Geeks for Geeks - Zero Sum Array 
+
 const zeroSumSubArray = arr => {
   let results = [];
 
