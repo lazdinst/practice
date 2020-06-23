@@ -1,8 +1,6 @@
+
 /**
- * @param {number[]} nums
- * @return {number}
- */
-/**
+ * Leet Code
  * @param {number[]} nums
  * @return {number}
  */
@@ -18,7 +16,7 @@ const singleNumber = nums => {
       count ++;
     }
     hash.set(nums[i], count);
-    
+
   }
 
   hash.forEach((value, key, index) => {
