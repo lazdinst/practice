@@ -1,20 +1,36 @@
-function rotateImage(a) {
-  let result = a.slice(0)
-  let l = a.length;
-  for(r = 0; r < a.length; r++) {
-    for(c = 0; c < a.length; c++) {
-      let pixel = a[r][c];
-      //r = 0, c = 0
-      console.log('Row: ', r)
-      console.log('Column: ', c)
-      //
-      const row = Math.abs(c - l + 1)
+const rotateImage = m => {
+  let n = m.length;
 
-      result[l - r][l - c - 1] = pixel;
+  for(let i = 0; i < Math.floor(n/2); i++) {
+    for(let j = 0; j < n - (2*i) - 1; j++) {
+      let temp = null;
+
+      let a = m[i][i+j]
+      let b = m[i+j][n-1-i]
+      let c = m[n-1-i][n-1-i-j];
+      let d = m[n-1-i-j][i];
+
+      temp = b;
+      b = a;
+      a = temp;
+
+      temp = c;
+      c = a;
+      a = temp;
+
+      temp = d;
+      d = a;
+      a = temp;
+
+      m[i][i+j] = a;
+      m[i+j][n-1-i] = b;
+      m[n-1-i][n-1-i-j] = c;
+      m[n-1-i-j][i] = d;
 
     }
   }
-  return result
+
+  return m;
 }
 
 const img = [[1, 2, 3],
@@ -30,4 +46,4 @@ const img = [[1, 2, 3],
 // 9 6 3
 
 const result = rotateImage(img);
-console.log(result);
+console.log(result);  
